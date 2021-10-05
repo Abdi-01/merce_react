@@ -8,7 +8,7 @@ class Navbar extends React.Component {
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <Link className="navbar-brand font-weight-bold" to="/">Merce</Link>
+                <Link className="navbar-brand font-weight-bold" to="/">{this.props.brand}</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -21,7 +21,7 @@ class Navbar extends React.Component {
                         </li>
                     </ul>
                     <div className="ml-auto">
-                        <button className="btn btn-info">Sign In</button>
+                        <Link className="btn btn-info" to="/signin">Sign In</Link>
                         <Link className="btn btn-outline-warning" to="/signup">Sign Up</Link>
                     </div>
                 </div>
