@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios'
+import { loginAction } from '../actions'
+import { connect } from 'react-redux'
 
 class SignInPage extends React.Component {
     constructor(props) {
@@ -27,7 +29,8 @@ class SignInPage extends React.Component {
         } else {
             axios.get(`http://localhost:2010/users?email=${email}&password=${password}`)
                 .then((res) => {
-                    console.table(res.data)
+                    this.props.loginAction(res.data[0])
+                    // console.table(res.data)
                     // penyimpanan data pda browser
                     localStorage.setItem("data", JSON.stringify(res.data[0]))
                 }).catch((err) => {
@@ -59,4 +62,4 @@ class SignInPage extends React.Component {
     }
 }
 
-export default SignInPage;
+export default connect(null, { loginAction })(SignInPage);

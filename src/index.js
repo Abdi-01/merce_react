@@ -4,11 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+// Konfigurasi redux
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { Reducers } from './reducers'
+const globalStore = createStore(Reducers)
+
 ReactDOM.render(
-  // BrowserRouter : untuk konfigurasi routing/navigasi page
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <Provider store={globalStore}>
+    {/* // BrowserRouter : untuk konfigurasi routing/navigasi page */}
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
 
