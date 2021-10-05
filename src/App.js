@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Navbar from './components/Navbar';
+import LandingPage from './pages/LandingPage'
+import ProductPage from './pages/ProductsPage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Switch, Route } from 'react-router-dom'
+import SignUpPage from './pages/SignUpPage';
+class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+
+  render() {
+    return (
+      <div>
+        <Navbar />
+        {/* <Switch> : memproses perpindahan navigasi */}
+        <Switch>
+          {/* <Reoute> : menentukan alamat page */}
+          <Route path="/" component={LandingPage} exact />
+          <Route path="/products" component={ProductPage} />
+          <Route path="/signup" component={SignUpPage} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;
