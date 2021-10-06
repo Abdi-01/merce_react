@@ -2,13 +2,15 @@ import React from 'react';
 import axios from 'axios'
 import { loginAction } from '../actions'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 class SignInPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             passType: "password",
-            passVisible: "Show"
+            passVisible: "Show",
+            redirect: false
         }
     }
 
@@ -30,6 +32,7 @@ class SignInPage extends React.Component {
             axios.get(`http://localhost:2010/users?email=${email}&password=${password}`)
                 .then((res) => {
                     this.props.loginAction(res.data[0])
+                    this.setState({ redirect: true })
                     // console.table(res.data)
                     // penyimpanan data pda browser
                     localStorage.setItem("data", JSON.stringify(res.data[0]))
@@ -40,6 +43,12 @@ class SignInPage extends React.Component {
     }
 
     render() {
+        if (this.props.iduser) {
+            // perintah redirect
+            return (
+                <Redirect to="/" />
+            )
+        }
         return (
             <div className="m-auto pt-4" style={{ width: "30%" }}>
                 <h1 className="text-center">Sign In</h1>
@@ -62,4 +71,10 @@ class SignInPage extends React.Component {
     }
 }
 
-export default connect(null, { loginAction })(SignInPage);
+const mapToProps = (globalState) => {
+    return {
+        iduser: globalState.authReducer.id
+    }
+}
+
+export default connect(mapToProps, { loginAction })(SignInPage);

@@ -6,11 +6,31 @@ import SignUpPage from './pages/SignUpPage';
 import SignInPage from './pages/SignInPage';
 
 import { Switch, Route } from 'react-router-dom'
+import axios from 'axios';
+import { loginAction } from './actions'
+import { connect } from 'react-redux'
 class App extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {}
+  }
+
+  componentDidMount() {
+    this.keepLogin()
+  }
+
+  keepLogin = () => {
+    let data = JSON.parse(localStorage.getItem("data"))
+    console.log(data)
+    if (data) {
+      axios.get(`http://localhost:2010/users?email=${data.email}&password=${data.password}`)
+        .then((res) => {
+          this.props.loginAction(res.data[0])
+          localStorage.setItem("data", JSON.stringify(res.data[0]))
+        }).catch((err) => {
+          console.log(err)
+        })
+    }
   }
 
   render() {
@@ -30,4 +50,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(null, { loginAction })(App);
