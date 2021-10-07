@@ -16,7 +16,7 @@ class Navbar extends React.Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className={`navbar navbar-expand-lg navbar-dark bg-dark`}>
                 <Link className="navbar-brand font-weight-bold" to="/">{this.props.brand}</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -38,9 +38,19 @@ class Navbar extends React.Component {
                                         Hello, {this.props.email}
                                     </button>
                                     <div className="dropdown-menu">
-                                        <a className="dropdown-item" style={{ cursor: "pointer" }}>Profile</a>
-                                        <a className="dropdown-item" style={{ cursor: "pointer" }}>Cart</a>
-                                        <a className="dropdown-item" style={{ cursor: "pointer" }}>Transactions</a>
+                                        {
+                                            this.props.role == "user" ?
+                                                <div>
+                                                    <a className="dropdown-item" style={{ cursor: "pointer" }}>Profile</a>
+                                                    <a className="dropdown-item" style={{ cursor: "pointer" }}>Cart</a>
+                                                    <a className="dropdown-item" style={{ cursor: "pointer" }}>Transactions</a>
+                                                </div>
+                                                :
+                                                <div>
+                                                    <a className="dropdown-item" style={{ cursor: "pointer" }}>Manage Products</a>
+                                                    <a className="dropdown-item" style={{ cursor: "pointer" }}>Manage Transactions</a>
+                                                </div>
+                                        }
                                         <div className="dropdown-divider"></div>
                                         <a className="dropdown-item" style={{ cursor: "pointer" }} onClick={this.btnLogOut}>Logout</a>
                                     </div>
