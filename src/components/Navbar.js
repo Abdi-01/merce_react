@@ -70,7 +70,7 @@ class Navbar extends React.Component {
 
 // menampung/menerima data dari globalstorage
 const mapToProps = (globalState) => {
-    console.table(globalState.authReducer)
+    // console.table(globalState.authReducer)
     return {
         user: globalState.authReducer,
         iduser: globalState.authReducer.id,
