@@ -41,14 +41,14 @@ class Navbar extends React.Component {
                                         {
                                             this.props.role == "user" ?
                                                 <div>
-                                                    <a className="dropdown-item" style={{ cursor: "pointer" }}>Profile</a>
-                                                    <a className="dropdown-item" style={{ cursor: "pointer" }}>Cart</a>
-                                                    <a className="dropdown-item" style={{ cursor: "pointer" }}>Transactions</a>
+                                                    <Link to="/profile" className="dropdown-item" style={{ cursor: "pointer" }}>Profile</Link>
+                                                    <Link to="/cart" className="dropdown-item" style={{ cursor: "pointer" }}>Cart</Link>
+                                                    <Link to="/history" className="dropdown-item" style={{ cursor: "pointer" }}>Transactions</Link>
                                                 </div>
                                                 :
                                                 <div>
-                                                    <a className="dropdown-item" style={{ cursor: "pointer" }}>Manage Products</a>
-                                                    <a className="dropdown-item" style={{ cursor: "pointer" }}>Manage Transactions</a>
+                                                    <Link to="/products-admin" className="dropdown-item" style={{ cursor: "pointer" }}>Manage Products</Link>
+                                                    <Link to="/transactions-admin" className="dropdown-item" style={{ cursor: "pointer" }}>Manage Transactions</Link>
                                                 </div>
                                         }
                                         <div className="dropdown-divider"></div>

@@ -4,6 +4,13 @@ import LandingPage from './pages/LandingPage'
 import ProductPage from './pages/ProductsPage';
 import SignUpPage from './pages/SignUpPage';
 import SignInPage from './pages/SignInPage';
+// User Pages
+import ProfilePage from './pages/UserPages/ProfilePage'
+import CartPage from './pages/UserPages/CartPage'
+import HistoryPage from './pages/UserPages/HistoryPage'
+// Admin Pages
+import ProductAdmin from './pages/AdminPages/ProductAdmin'
+import TransactionAdmin from './pages/AdminPages/TransactionAdmin'
 
 import { Switch, Route } from 'react-router-dom'
 import axios from 'axios';
@@ -44,6 +51,11 @@ class App extends React.Component {
           <Route path="/products" component={ProductPage} />
           <Route path="/signup" component={SignUpPage} />
           <Route path="/signin" component={SignInPage} />
+          <Route path="/profile" component={ProfilePage} />
+          <Route path="/cart" component={CartPage} />
+          <Route path="/history" component={HistoryPage} />
+          <Route path="/products-admin" component={ProductAdmin} />
+          <Route path="/transactions-admin" component={TransactionAdmin} />
         </Switch>
       </div>
     );
