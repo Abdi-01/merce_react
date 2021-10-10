@@ -81,7 +81,7 @@
       "brand": "IKEA",
       "kategori": "Kabinet pintu kaca",
       "harga": 2499000,
-      "stock":14,
+      "stock": 14,
       "images": [
         "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/390/0939002_PE794384_S4.jpg",
         "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/388/0938824_PE794380_S4.jpg",
@@ -116,6 +116,18 @@
         "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/541/0954179_PE804202_S4.jpg"
       ],
       "id": 7
+    },
+    {
+      "nama": "Kursi Lipat",
+      "brand": "Ace HardWare",
+      "kategori": "Mebel",
+      "stock": 12,
+      "harga": 85000,
+      "deskripsi": "Kursi lipat ini dapat dilipat sehingga tidak memakan tempat dan mudah di bawa pada saat akan memancing.",
+      "images": [
+        "https://www.jakartanotebook.com/images/products/72/1020/41614/6/jocestyle-kursi-lipat-memancing-portable-collapsible-folding-fishing-chair-high-design-sf733-blue-178.jpg"
+      ],
+      "id": 8
     }
   ]
 }

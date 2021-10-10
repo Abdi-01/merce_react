@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Table, Button, NavItem } from 'reactstrap'
+import { Table, Button, NavItem, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input } from 'reactstrap'
 
 class ProductAdmin extends React.Component {
     constructor(props) {
@@ -8,7 +8,8 @@ class ProductAdmin extends React.Component {
         this.state = {
             products: [],
             imgIndex: 0,
-            productIndex: null
+            productIndex: null,
+            modal: false
         }
     }
 
@@ -64,10 +65,92 @@ class ProductAdmin extends React.Component {
         })
     }
 
+    btAddProduct = () => {
+        let nama = this.refs.nama.value
+        let brand = this.refs.brand.value
+        let kategori = this.refs.kategori.value
+        let stock = parseInt(this.refs.stock.value)
+        let harga = parseInt(this.refs.harga.value)
+        let deskripsi = this.refs.deskripsi.value
+        let images = [this.image.value]
+
+        console.log(nama, brand, kategori, stock, harga, deskripsi, images)
+
+        axios.post("http://localhost:2010/products", {
+            nama, brand, kategori, stock, harga, deskripsi, images
+        }).then((res) => {
+            this.getProducts()
+            this.setState({ modal: !this.state.modal })
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
     render() {
         return (
             <div className="p-3">
                 <h3 className="text-center">Products Management</h3>
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button color="success" outline type="button" onClick={() => this.setState({ modal: !this.state.modal })}>
+                        Add Product
+                    </Button>
+                </div>
+                {/* Modal untuk add product */}
+                <Modal isOpen={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })}>
+                    <ModalHeader>Add Product</ModalHeader>
+                    <ModalBody>
+                        <div className="row">
+                            <div className="form-group col-6">
+                                <label>Name</label>
+                                <input type="text" className="form-control" ref="nama" />
+                            </div>
+                            <div className="form-group col-6">
+                                <label>Brand</label>
+                                <input type="text" className="form-control" ref="brand" />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-4">
+                                <div className="form-group">
+                                    <label>Category</label>
+                                    <select className="form-control" ref="kategori">
+                                        <option value={null}>Pilih Category</option>
+                                        <option value="Mebel">Mebel</option>
+                                        <option value="Accesories">Accesories</option>
+                                        <option value="Pakaian">Pakaian</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-4">
+                                <div className="form-group">
+                                    <label>Stock</label>
+                                    <input type="text" className="form-control" ref="stock" />
+                                </div>
+                            </div>
+                            <div className="col-4">
+                                <div className="form-group">
+                                    <label>Price</label>
+                                    <input type="text" className="form-control" ref="harga" />
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label>Description</label>
+                                <textarea className="form-control" ref="deskripsi" />
+                            </div>
+                            <hr />
+                            <div>
+                                <FormGroup>
+                                    <Label>Image-1</Label>
+                                    <Input type="text" innerRef={(e) => this.image = e} />
+                                </FormGroup>
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button type="button" outline color="success" onClick={this.btAddProduct}>Submit</Button>
+                    </ModalFooter>
+                </Modal>
+
                 <Table dark className="mt-4">
                     <thead>
                         <tr>
