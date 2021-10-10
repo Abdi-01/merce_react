@@ -128,6 +128,20 @@
         "https://www.jakartanotebook.com/images/products/72/1020/41614/6/jocestyle-kursi-lipat-memancing-portable-collapsible-folding-fishing-chair-high-design-sf733-blue-178.jpg"
       ],
       "id": 8
+    },
+    {
+      "nama": "Meja lipat",
+      "brand": "Informa",
+      "kategori": "Mebel",
+      "stock": 13,
+      "harga": 350000,
+      "deskripsi": "A range of banquet and resto tables, suitable for hotels, restaurants, cafe, office pantry or school dining hall.",
+      "images": [
+        "https://id-test-11.slatic.net/p/c180f6d49d8759f1fab0d7b5604ab0bf.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuPAGpj0xxmy0R0QxIZjFWLeU-rfstgL7HoFTiiqDf0qNg6Kvmum0sOTb_obbLY6Xta_A&usqp=CAU",
+        "https://s2.bukalapak.com/img/27270443572/large/data.jpeg"
+      ],
+      "id": 9
     }
   ]
 }

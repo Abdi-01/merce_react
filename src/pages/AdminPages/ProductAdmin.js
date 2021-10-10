@@ -9,7 +9,8 @@ class ProductAdmin extends React.Component {
             products: [],
             imgIndex: 0,
             productIndex: null,
-            modal: false
+            modal: false,
+            images: []
         }
     }
 
@@ -65,6 +66,19 @@ class ProductAdmin extends React.Component {
         })
     }
 
+    printImagesForm = () => {
+        return this.state.images.map((value, index) => {
+            return <Input type="text" placeholder={`Image-${index + 1}`}
+                onChange={(e) => this.handleImages(e, index)} />
+        })
+    }
+
+    handleImages = (e, index) => {
+        let temp = this.state.images
+        temp[index] = e.target.value
+        this.setState({ images: temp })
+    }
+
     btAddProduct = () => {
         let nama = this.refs.nama.value
         let brand = this.refs.brand.value
@@ -72,7 +86,7 @@ class ProductAdmin extends React.Component {
         let stock = parseInt(this.refs.stock.value)
         let harga = parseInt(this.refs.harga.value)
         let deskripsi = this.refs.deskripsi.value
-        let images = [this.image.value]
+        let images = this.state.images
 
         console.log(nama, brand, kategori, stock, harga, deskripsi, images)
 
@@ -86,7 +100,14 @@ class ProductAdmin extends React.Component {
         })
     }
 
+    btAddImage = () => {
+        let temp = this.state.images
+        temp.push("")
+        this.setState({ images: temp })
+    }
+
     render() {
+        console.log("List Images", this.state.images)
         return (
             <div className="p-3">
                 <h3 className="text-center">Products Management</h3>
@@ -137,14 +158,13 @@ class ProductAdmin extends React.Component {
                                 <label>Description</label>
                                 <textarea className="form-control" ref="deskripsi" />
                             </div>
-                            <hr />
-                            <div>
-                                <FormGroup>
-                                    <Label>Image-1</Label>
-                                    <Input type="text" innerRef={(e) => this.image = e} />
-                                </FormGroup>
-                            </div>
                         </div>
+                        <hr />
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <Label>Images List</Label>
+                            <Button type="button" outline color="warning" size="sm" onClick={this.btAddImage}>Add Image</Button>
+                        </div>
+                        {this.printImagesForm()}
                     </ModalBody>
                     <ModalFooter>
                         <Button type="button" outline color="success" onClick={this.btAddProduct}>Submit</Button>
