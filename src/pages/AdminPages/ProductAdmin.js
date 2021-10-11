@@ -12,6 +12,7 @@ class ProductAdmin extends React.Component {
             modal: false,
             modalEdit: false,
             images: [],
+            imagesEdit: [],
             selectedIndex: null
         }
     }
@@ -78,17 +79,48 @@ class ProductAdmin extends React.Component {
                 onChange={(e) => this.handleImages(e, index)} />
         })
     }
-
-    printImagesEdit = () => {
-        return this.state.products[this.state.selectedIndex].images.map((value, index) => {
-            return <Input type="text" placeholder={`Image-${index + 1}`} defaultValue={value} />
-        })
-    }
-
     handleImages = (e, index) => {
         let temp = this.state.images
         temp[index] = e.target.value
         this.setState({ images: temp })
+    }
+
+    printImagesEdit = () => {
+        return this.state.products[this.state.selectedIndex].images.map((value, index) => {
+            return <Input type="text" placeholder={`Image-${index + 1}`} defaultValue={value}
+                onChange={(e) => this.handleImagesEdit(e, index)}
+            />
+        })
+    }
+
+    handleImagesEdit = (e, index) => {
+        let temp = [...this.state.products[this.state.selectedIndex].images]
+        temp[index] = e.target.value
+        this.setState({ imagesEdit: temp })
+    }
+
+    btSaveEdit = () => {
+        let { products, selectedIndex, imagesEdit, modalEdit } = this.state
+        console.log("gambar edit",imagesEdit)
+
+        let nama = this.refs.editNama.value
+        let brand = this.refs.editBrand.value
+        let kategori = this.refs.editKategori.value
+        let stock = parseInt(this.refs.editStock.value)
+        let harga = parseInt(this.refs.editHarga.value)
+        let deskripsi = this.refs.editDeskripsi.value
+        let images = imagesEdit.length > 0 ? imagesEdit : products[selectedIndex].images
+
+
+        axios.patch(`http://localhost:2010/products/${products[selectedIndex].id}`, {
+            nama, brand, kategori, stock, harga, deskripsi, images
+        })
+            .then((res) => {
+                this.getProducts()
+                this.setState({ selectedIndex: null, imagesEdit: [], modalEdit: !modalEdit })
+            }).catch((err) => {
+                console.log(err)
+            })
     }
 
     btAddProduct = () => {
@@ -119,7 +151,7 @@ class ProductAdmin extends React.Component {
     }
 
     render() {
-        console.log("List Images", this.state.images)
+        // console.log("List Images", this.state.images)
         let { modal, modalEdit, products, selectedIndex } = this.state;
         return (
             <div className="p-3">
@@ -237,8 +269,8 @@ class ProductAdmin extends React.Component {
                                 {this.printImagesEdit()}
                             </ModalBody>
                             <ModalFooter>
-                                <Button type="button" outline color="warning" onClick={this.btAddProduct}>Cancel</Button>
-                                <Button type="button" outline color="success" onClick={this.btAddProduct}>Save</Button>
+                                <Button type="button" outline color="warning" onClick={() => this.setState({ modalEdit: !modalEdit, selectedIndex: null, imagesEdit: [] })}>Cancel</Button>
+                                <Button type="button" outline color="success" onClick={this.btSaveEdit}>Save</Button>
                             </ModalFooter>
                         </Modal>
                         :
