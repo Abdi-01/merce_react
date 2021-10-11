@@ -10,7 +10,9 @@ class ProductAdmin extends React.Component {
             imgIndex: 0,
             productIndex: null,
             modal: false,
-            images: []
+            modalEdit: false,
+            images: [],
+            selectedIndex: null
         }
     }
 
@@ -59,17 +61,27 @@ class ProductAdmin extends React.Component {
                 <td>{value.stock}</td>
                 <td>IDR. {value.harga.toLocaleString()}</td>
                 <td>
-                    <Button type="button" color="warning" >Edit</Button>
+                    <Button type="button" color="warning" onClick={() => this.btEdit(index)}>Edit</Button>
                     <Button type="button" color="danger" outline>Delete</Button>
                 </td>
             </tr>
         })
     }
 
+    btEdit = (index) => {
+        this.setState({ modalEdit: !this.state.modalEdit, selectedIndex: index })
+    }
+
     printImagesForm = () => {
         return this.state.images.map((value, index) => {
             return <Input type="text" placeholder={`Image-${index + 1}`}
                 onChange={(e) => this.handleImages(e, index)} />
+        })
+    }
+
+    printImagesEdit = () => {
+        return this.state.products[this.state.selectedIndex].images.map((value, index) => {
+            return <Input type="text" placeholder={`Image-${index + 1}`} defaultValue={value} />
         })
     }
 
@@ -108,16 +120,17 @@ class ProductAdmin extends React.Component {
 
     render() {
         console.log("List Images", this.state.images)
+        let { modal, modalEdit, products, selectedIndex } = this.state;
         return (
             <div className="p-3">
                 <h3 className="text-center">Products Management</h3>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <Button color="success" outline type="button" onClick={() => this.setState({ modal: !this.state.modal })}>
+                    <Button color="success" outline type="button" onClick={() => this.setState({ modal: !modal })}>
                         Add Product
                     </Button>
                 </div>
                 {/* Modal untuk add product */}
-                <Modal isOpen={this.state.modal} toggle={() => this.setState({ modal: !this.state.modal })}>
+                <Modal isOpen={modal} toggle={() => this.setState({ modal: !modal })}>
                     <ModalHeader>Add Product</ModalHeader>
                     <ModalBody>
                         <div className="row">
@@ -170,7 +183,67 @@ class ProductAdmin extends React.Component {
                         <Button type="button" outline color="success" onClick={this.btAddProduct}>Submit</Button>
                     </ModalFooter>
                 </Modal>
-
+                {/* Modal untuk edit product */}
+                {
+                    selectedIndex != null ?
+                        <Modal isOpen={modalEdit} toggle={() => this.setState({ modalEdit: !modalEdit })}>
+                            <ModalHeader>Edit Poduct</ModalHeader>
+                            <ModalBody>
+                                <div className="row">
+                                    <div className="form-group col-6">
+                                        <label>Name</label>
+                                        <input type="text" className="form-control" ref="editNama"
+                                            defaultValue={products[selectedIndex].nama} />
+                                    </div>
+                                    <div className="form-group col-6">
+                                        <label>Brand</label>
+                                        <input type="text" className="form-control" ref="editBrand"
+                                            defaultValue={products[selectedIndex].brand} />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-4">
+                                        <div className="form-group">
+                                            <label>Category</label>
+                                            <select className="form-control" ref="editKategori" defaultValue={products[selectedIndex].kategori}>
+                                                <option value={null}>Pilih Category</option>
+                                                <option value="Mebel">Mebel</option>
+                                                <option value="Accesories">Accesories</option>
+                                                <option value="Pakaian">Pakaian</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-4">
+                                        <div className="form-group">
+                                            <label>Stock</label>
+                                            <input type="text" className="form-control" ref="editStock" defaultValue={products[selectedIndex].stock} />
+                                        </div>
+                                    </div>
+                                    <div className="col-4">
+                                        <div className="form-group">
+                                            <label>Price</label>
+                                            <input type="text" className="form-control" ref="editHarga" defaultValue={products[selectedIndex].harga} />
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Description</label>
+                                        <textarea className="form-control" ref="editDeskripsi" defaultValue={products[selectedIndex].deskripsi} />
+                                    </div>
+                                </div>
+                                <hr />
+                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <Label>Images List</Label>
+                                </div>
+                                {this.printImagesEdit()}
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button type="button" outline color="warning" onClick={this.btAddProduct}>Cancel</Button>
+                                <Button type="button" outline color="success" onClick={this.btAddProduct}>Save</Button>
+                            </ModalFooter>
+                        </Modal>
+                        :
+                        null
+                }
                 <Table dark className="mt-4">
                     <thead>
                         <tr>
