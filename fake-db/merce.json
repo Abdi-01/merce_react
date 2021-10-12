@@ -5,21 +5,29 @@
       "email": "abdi@mail.com",
       "password": "password",
       "role": "Admin",
-      "cart":[]
+      "cart": []
     },
     {
       "id": 2,
       "email": "edo@mail.com",
       "password": "password",
       "role": "user",
-      "cart":[]
+      "cart": [
+        {
+          "nama": "Kursi Lipat",
+          "harag": 85000,
+          "qty": 2,
+          "subTotal": 170000,
+          "image": "https://www.jakartanotebook.com/images/products/72/1020/41614/6/jocestyle-kursi-lipat-memancing-portable-collapsible-folding-fishing-chair-high-design-sf733-blue-178.jpg"
+        }
+      ]
     },
     {
       "id": 3,
       "email": "aldo@mail.com",
       "password": "123",
       "role": "user",
-      "cart":[]
+      "cart": []
     }
   ],
   "products": [

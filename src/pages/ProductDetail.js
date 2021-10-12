@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Spinner, InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap'
+import { connect } from 'react-redux'
 class ProductDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -47,7 +48,29 @@ class ProductDetail extends React.Component {
         } else {
             alert("Product out of stock ❌")
         }
+    }
 
+    btAddToCart = () => {
+        if (this.props.idUser) {
+            let { dataDetail, qty } = this.state
+            let temp = [...this.props.cartUser]
+            temp.push({
+                nama: dataDetail.nama,
+                harag: dataDetail.harga,
+                qty,
+                subTotal: dataDetail.harga * qty,
+                image: dataDetail.images[0]
+            })
+            axios.patch(`http://localhost:2010/users/${this.props.idUser}`, {
+                cart: temp
+            }).then((res) => {
+                alert("Success Add To Cart ✅")
+            }).catch((err) => {
+                console.log(err)
+            })
+        }else{
+            alert("Login First !!!")
+        }
     }
 
     render() {
@@ -80,15 +103,15 @@ class ProductDetail extends React.Component {
                                 <label style={{ fontWeight: "bold" }}>Amount Buy :</label>
                                 <InputGroup style={{ width: "30%", marginLeft: "20px" }}>
                                     <InputGroupAddon addonType="prepend">
-                                        <button className="btn btn-warning" onClick={this.btDec}>-</button>
+                                        <button type="button" className="btn btn-warning" onClick={this.btDec}>-</button>
                                     </InputGroupAddon>
                                     <Input type="number" placeholder="qty" value={qty} onChange={this.handleQty} />
                                     <InputGroupAddon addonType="append">
-                                        <button className="btn btn-warning" onClick={this.btInc}>+</button>
+                                        <button type="button" className="btn btn-warning" onClick={this.btInc}>+</button>
                                     </InputGroupAddon>
                                 </InputGroup>
                             </div>
-                            <button className="btn btn-success" style={{ width: "100%" }}>Add To Cart</button>
+                            <button type="button" className="btn btn-success" style={{ width: "100%" }} onClick={this.btAddToCart}>Add To Cart</button>
                         </div>
                     </>
                 }
@@ -97,4 +120,11 @@ class ProductDetail extends React.Component {
     }
 }
 
-export default ProductDetail;
+const mapToProps = (globalState) => {
+    return {
+        cartUser: globalState.authReducer.cart,
+        idUser: globalState.authReducer.id,
+    }
+}
+
+export default connect(mapToProps)(ProductDetail);
