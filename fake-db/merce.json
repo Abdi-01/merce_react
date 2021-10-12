@@ -4,19 +4,22 @@
       "id": 1,
       "email": "abdi@mail.com",
       "password": "password",
-      "role": "Admin"
+      "role": "Admin",
+      "cart":[]
     },
     {
       "id": 2,
       "email": "edo@mail.com",
       "password": "password",
-      "role": "user"
+      "role": "user",
+      "cart":[]
     },
     {
+      "id": 3,
       "email": "aldo@mail.com",
       "password": "123",
       "role": "user",
-      "id": 3
+      "cart":[]
     }
   ],
   "products": [

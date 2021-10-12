@@ -2,7 +2,8 @@
 const INITIAL_STATE = {
     id: null,
     email: "",
-    role: ""
+    role: "",
+    cart: []
 }
 
 export const authReducer = (state = INITIAL_STATE, action) => {

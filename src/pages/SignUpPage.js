@@ -18,19 +18,20 @@ class SignUpPage extends React.Component {
             alert(`FIll in form ❌`)
         } else {
             if (password == confPassword) {
-                if(email.includes("@")){
+                if (email.includes("@")) {
                     // Mengirim ke API menggunakan axios.post
                     axios.post(`http://localhost:2010/users`, {
                         email,
                         password,
-                        role: "user"
+                        role: "user",
+                        cart: []
                     }).then((res) => {
                         console.log(res)
-    
+
                     }).catch((err) => {
                         console.log(err)
                     })
-                }else{
+                } else {
                     alert(`Email failed ❌`)
                 }
             } else {

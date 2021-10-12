@@ -5,7 +5,8 @@ class ProductDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataDetail: {}
+            dataDetail: {},
+            qty: 1
         }
     }
 
@@ -25,8 +26,32 @@ class ProductDetail extends React.Component {
                 console.log(err)
             })
     }
+
+    btInc = () => {
+        if (this.state.qty < this.state.dataDetail.stock) {
+            this.setState({ qty: this.state.qty += 1 })
+        } else {
+            alert("Product out of stock ❌")
+        }
+    }
+
+    btDec = () => {
+        if (this.state.qty > 1) {
+            this.setState({ qty: this.state.qty -= 1 })
+        }
+    }
+
+    handleQty = (e) => {
+        if (this.state.qty < this.state.dataDetail.stock) {
+            this.setState({ qty: parseInt(e.target.value) })
+        } else {
+            alert("Product out of stock ❌")
+        }
+
+    }
+
     render() {
-        let { dataDetail } = this.state
+        let { dataDetail, qty } = this.state
         return (
             <div className="row p-5">
                 {
@@ -53,13 +78,13 @@ class ProductDetail extends React.Component {
                             <hr />
                             <div className="d-flex mb-3">
                                 <label style={{ fontWeight: "bold" }}>Amount Buy :</label>
-                                <InputGroup style={{width:"30%", marginLeft:"20px"}}>
+                                <InputGroup style={{ width: "30%", marginLeft: "20px" }}>
                                     <InputGroupAddon addonType="prepend">
-                                        <button className="btn btn-warning">-</button>
+                                        <button className="btn btn-warning" onClick={this.btDec}>-</button>
                                     </InputGroupAddon>
-                                    <Input placeholder="qty" />
+                                    <Input type="number" placeholder="qty" value={qty} onChange={this.handleQty} />
                                     <InputGroupAddon addonType="append">
-                                        <button className="btn btn-warning">+</button>
+                                        <button className="btn btn-warning" onClick={this.btInc}>+</button>
                                     </InputGroupAddon>
                                 </InputGroup>
                             </div>
