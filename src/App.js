@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage'
 import ProductPage from './pages/ProductsPage';
 import SignUpPage from './pages/SignUpPage';
 import SignInPage from './pages/SignInPage';
+import ProductDetail from './pages/ProductDetail';
 // User Pages
 import ProfilePage from './pages/UserPages/ProfilePage'
 import CartPage from './pages/UserPages/CartPage'
@@ -49,6 +50,7 @@ class App extends React.Component {
           {/* <Reoute> : menentukan alamat page */}
           <Route path="/" component={LandingPage} exact />
           <Route path="/products" component={ProductPage} />
+          <Route path="/product-detail" component={ProductDetail} />
           <Route path="/signup" component={SignUpPage} />
           <Route path="/signin" component={SignInPage} />
           <Route path="/profile" component={ProfilePage} />

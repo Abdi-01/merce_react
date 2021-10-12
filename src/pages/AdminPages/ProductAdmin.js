@@ -101,7 +101,7 @@ class ProductAdmin extends React.Component {
 
     btSaveEdit = () => {
         let { products, selectedIndex, imagesEdit, modalEdit } = this.state
-        console.log("gambar edit",imagesEdit)
+        console.log("gambar edit", imagesEdit)
 
         let nama = this.refs.editNama.value
         let brand = this.refs.editBrand.value
@@ -134,14 +134,22 @@ class ProductAdmin extends React.Component {
 
         console.log(nama, brand, kategori, stock, harga, deskripsi, images)
 
-        axios.post("http://localhost:2010/products", {
-            nama, brand, kategori, stock, harga, deskripsi, images
-        }).then((res) => {
-            this.getProducts()
-            this.setState({ modal: !this.state.modal })
-        }).catch((err) => {
-            console.log(err)
-        })
+        if (nama == "" || brand == "" || kategori == "" || stock == "" || harga == "" || deskripsi == "" || images.length == 0) {
+            alert("Fill in form ❌")
+        } else {
+            if (isNaN(stock) || isNaN(harga)) {
+                alert("Price or stock, wrong input ❌")
+            } else {
+                axios.post("http://localhost:2010/products", {
+                    nama, brand, kategori, stock, harga, deskripsi, images
+                }).then((res) => {
+                    this.getProducts()
+                    this.setState({ modal: !this.state.modal })
+                }).catch((err) => {
+                    console.log(err)
+                })
+            }
+        }
     }
 
     btAddImage = () => {
