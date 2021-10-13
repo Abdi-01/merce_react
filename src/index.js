@@ -7,9 +7,10 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 // Konfigurasi redux
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Reducers } from './reducers'
-const globalStore = createStore(Reducers)
+import ReduxThunk from 'redux-thunk'
+const globalStore = createStore(Reducers, {}, applyMiddleware(ReduxThunk))
 
 ReactDOM.render(
   <Provider store={globalStore}>

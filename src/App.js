@@ -15,7 +15,7 @@ import TransactionAdmin from './pages/AdminPages/TransactionAdmin'
 
 import { Switch, Route } from 'react-router-dom'
 import axios from 'axios';
-import { loginAction } from './actions'
+import { loginAction, keepLogin } from './actions'
 import { connect } from 'react-redux'
 class App extends React.Component {
   constructor(props) {
@@ -24,20 +24,14 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.keepLogin()
+    this.reLogin()
   }
 
-  keepLogin = () => {
+  reLogin = () => {
     let data = JSON.parse(localStorage.getItem("data"))
     console.log(data)
     if (data) {
-      axios.get(`http://localhost:2010/users?email=${data.email}&password=${data.password}`)
-        .then((res) => {
-          this.props.loginAction(res.data[0])
-          localStorage.setItem("data", JSON.stringify(res.data[0]))
-        }).catch((err) => {
-          console.log(err)
-        })
+      this.props.keepLogin(data)
     }
   }
 
@@ -64,4 +58,4 @@ class App extends React.Component {
   }
 }
 
-export default connect(null, { loginAction })(App);
+export default connect(null, { loginAction, keepLogin })(App);

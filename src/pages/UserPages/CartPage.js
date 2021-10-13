@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Input, FormGroup, Label, InputGroup, InputGroupAddon } from 'reactstrap';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { updateCartAction } from '../../actions';
 
 class CartPage extends React.Component {
     constructor(props) {
@@ -35,7 +36,7 @@ class CartPage extends React.Component {
                         </InputGroup>
                         <h4>IDR. {(item.harga * item.qty).toLocaleString()}</h4>
                     </div>
-                    <Button color="warning" style={{ border: 'none', float: 'right', marginLeft: "1vw" }} onClick={() => this.props.deleteCart(item.idcart, this.props.iduser)}>Remove</Button>
+                    <Button color="warning" onClick={() => this.btDeleteCart(index)} style={{ border: 'none', float: 'right', marginLeft: "1vw" }} >Remove</Button>
                 </div>
             </div>
         })
@@ -45,6 +46,19 @@ class CartPage extends React.Component {
         let total = 0
         this.props.cartUser.forEach(item => total += item.qty * item.harga)
         return { total: total + (total * 0.025), ongkir: total * 0.025 }
+    }
+
+    btDeleteCart = idx => {
+        let temp = [...this.props.cartUser]
+        temp.splice(idx, 1)
+        axios.patch(`http://localhost:2010/users/${this.props.idUser}`, {
+            cart: temp
+        })
+            .then((res) => {
+                this.props.updateCartAction(res.data.cart)
+            }).catch((err) => {
+                console.log(err)
+            })
     }
 
     render() {
@@ -86,4 +100,4 @@ const mapToProps = (globalState) => {
     }
 }
 
-export default connect(mapToProps)(CartPage);
+export default connect(mapToProps, { updateCartAction })(CartPage);
