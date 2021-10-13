@@ -12,6 +12,8 @@ export const authReducer = (state = INITIAL_STATE, action) => {
             // console.log("REDUCER ==> Data dari authAction :", action.payload)
             // proses penyimpanan ke globalStorage, menggunakan concatination
             return { ...state, ...action.payload }
+        case "UPDATE_CART":
+            return { ...state, cart: action.payload }
         case "LOGOUT":
             // reset ulang data reducer dgn INITIAL_STATE
             return { ...state, ...INITIAL_STATE }

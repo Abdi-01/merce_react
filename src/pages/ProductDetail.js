@@ -2,18 +2,23 @@ import React from 'react';
 import axios from 'axios';
 import { Spinner, InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap'
 import { connect } from 'react-redux'
+import { updateCartAction } from "../actions"
+import { Redirect } from 'react-router-dom';
 class ProductDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             dataDetail: {},
-            qty: 1
+            qty: 1,
+            redirectToCart: false
         }
     }
 
     componentDidMount() {
         // untuk mengambil data query yang ada pada URL
         console.table(this.props.location)
+
+        // untuk mengambil data params yang ada pada URL
         console.table(this.props.match)
         this.getProductDetail()
     }
@@ -56,7 +61,7 @@ class ProductDetail extends React.Component {
             let temp = [...this.props.cartUser]
             temp.push({
                 nama: dataDetail.nama,
-                harag: dataDetail.harga,
+                harga: dataDetail.harga,
                 qty,
                 subTotal: dataDetail.harga * qty,
                 image: dataDetail.images[0]
@@ -64,17 +69,23 @@ class ProductDetail extends React.Component {
             axios.patch(`http://localhost:2010/users/${this.props.idUser}`, {
                 cart: temp
             }).then((res) => {
+                console.log("Succes Add To Cart>>>>>>>>", res.data)
+                this.props.updateCartAction(res.data.cart)
+                this.setState({ redirectToCart: true })
                 alert("Success Add To Cart ✅")
             }).catch((err) => {
                 console.log(err)
             })
-        }else{
+        } else {
             alert("Login First !!!")
         }
     }
 
     render() {
-        let { dataDetail, qty } = this.state
+        let { dataDetail, qty, redirectToCart } = this.state
+        if (redirectToCart) {
+            return <Redirect to="/cart" />
+        }
         return (
             <div className="row p-5">
                 {
@@ -127,4 +138,4 @@ const mapToProps = (globalState) => {
     }
 }
 
-export default connect(mapToProps)(ProductDetail);
+export default connect(mapToProps, { updateCartAction })(ProductDetail);

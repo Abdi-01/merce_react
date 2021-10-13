@@ -12,3 +12,10 @@ export const logoutAction = () => {
         type: "LOGOUT"
     }
 }
+
+export const updateCartAction = (data) => {
+    return {
+        type: "UPDATE_CART",
+        payload: data
+    }
+}

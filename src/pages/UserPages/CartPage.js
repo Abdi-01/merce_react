@@ -46,9 +46,10 @@ class CartPage extends React.Component {
         this.props.cartUser.forEach(item => total += item.qty * item.harga)
         return { total: total + (total * 0.025), ongkir: total * 0.025 }
     }
+
     render() {
         return (
-            <div>
+            <div className="p-5">
                 <h1 className="text-center mt-5">Keranjang Belanja</h1>
                 <div className="row m-1">
                     <div className="col-8">
@@ -77,6 +78,7 @@ class CartPage extends React.Component {
     }
 }
 
+// Untuk mengambil data cart dari reducer atau globalstorage
 const mapToProps = (globalState) => {
     return {
         cartUser: globalState.authReducer.cart,
