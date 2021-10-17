@@ -14,11 +14,18 @@
       "role": "user",
       "cart": [
         {
-          "nama": "Kursi Lipat",
-          "harga": 85000,
-          "qty": 3,
-          "subTotal": 170000,
-          "image": "https://www.jakartanotebook.com/images/products/72/1020/41614/6/jocestyle-kursi-lipat-memancing-portable-collapsible-folding-fishing-chair-high-design-sf733-blue-178.jpg"
+          "nama": "IDALINNEA A",
+          "harga": 79000,
+          "qty": 2,
+          "subTotal": 79000,
+          "image": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//103/MTA-2990748/shafiyyah-sarban_sarung-bantal-sofa--50x50-_full02.jpg"
+        },
+        {
+          "nama": "IDANÄS",
+          "harga": 5499000,
+          "qty": 1,
+          "subTotal": 5499000,
+          "image": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/160/0916066_PE784942_S4.jpg"
         }
       ]
     },
@@ -153,6 +160,40 @@
         "https://s2.bukalapak.com/img/27270443572/large/data.jpeg"
       ],
       "id": 9
+    }
+  ],
+  "userTransactions": [
+    {
+      "iduser": 2,
+      "username": "edo@mail.com",
+      "date": "17/10/2021",
+      "totalPayment": 14899400,
+      "note": "Barang aman",
+      "detail": [
+        {
+          "nama": "Kursi Lipat",
+          "harga": 85000,
+          "qty": 4,
+          "subTotal": 170000,
+          "image": "https://www.jakartanotebook.com/images/products/72/1020/41614/6/jocestyle-kursi-lipat-memancing-portable-collapsible-folding-fishing-chair-high-design-sf733-blue-178.jpg"
+        },
+        {
+          "nama": "HAUGA V.2",
+          "harga": 1599000,
+          "qty": 2,
+          "subTotal": 3198000,
+          "image": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/557/0955765_PE804101_S4.jpg"
+        },
+        {
+          "nama": "IDANÄS",
+          "harga": 5499000,
+          "qty": 2,
+          "subTotal": 10998000,
+          "image": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/160/0916066_PE784942_S4.jpg"
+        }
+      ],
+      "status": "Unpaid",
+      "id": 1
     }
   ]
 }

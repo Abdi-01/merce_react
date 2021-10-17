@@ -41,6 +41,8 @@ export const updateCartAction = (data, idUser) => {
                 type: "UPDATE_CART",
                 payload: res.data.cart
             })
+
+            return { success: true }
         } catch (error) {
             console.log(error)
         }

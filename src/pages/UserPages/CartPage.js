@@ -29,7 +29,7 @@ class CartPage extends React.Component {
                             <InputGroupAddon addonType="prepend">
                                 <button type="button" className="btn btn-warning" onClick={() => this.btDec(index)}>-</button>
                             </InputGroupAddon>
-                            <Input type="number" placeholder="qty" value={item.qty} disabled/>
+                            <Input type="number" placeholder="qty" value={item.qty} disabled />
                             <InputGroupAddon addonType="append">
                                 <button type="button" className="btn btn-warning" onClick={() => this.btInc(index)}>+</button>
                             </InputGroupAddon>
@@ -51,7 +51,7 @@ class CartPage extends React.Component {
     btDeleteCart = idx => {
         let temp = [...this.props.cartUser]
         temp.splice(idx, 1)
-        this.props.updateCartAction(temp,this.props.idUser)
+        this.props.updateCartAction(temp, this.props.idUser)
     }
 
     btInc = (idx) => {
@@ -66,6 +66,27 @@ class CartPage extends React.Component {
         let temp = [...cartUser]
         temp[idx].qty -= 1
         this.props.updateCartAction(temp, this.props.idUser)
+    }
+
+    btCheckOut = () => {
+        let date = new Date()
+        // data transaksi : idUser, username, date, totalPayment, note, detail : [cart], status:paid/unpaid
+        // axios post => userTransactions
+        axios.post("http://localhost:2010/userTransactions", {
+            iduser: this.props.idUser,
+            username: this.props.email,
+            date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
+            totalPayment: this.totalPayment().total,
+            note: this.note.value,
+            detail: this.props.cartUser,
+            status: "Unpaid"
+        }).then((res) => {
+            // mereset data cart dari user
+            this.props.updateCartAction([], this.props.idUser)
+            alert("Checkout Berhasil")
+        }).catch((err) => {
+            console.log(err)
+        })
     }
 
     render() {
@@ -89,7 +110,7 @@ class CartPage extends React.Component {
                                 <Input type="textarea" id="note" innerRef={elemen => this.note = elemen} />
                             </FormGroup>
                             <div className="d-flex justify-content-end">
-                                <Button type="button" color="success" onClick={this.onBtCheckOut}>Checkout</Button>
+                                <Button type="button" color="success" onClick={this.btCheckOut}>Checkout</Button>
                             </div>
                         </div>
                     </div>
@@ -104,6 +125,7 @@ const mapToProps = (globalState) => {
     return {
         cartUser: globalState.authReducer.cart,
         idUser: globalState.authReducer.id,
+        email: globalState.authReducer.email
     }
 }
 

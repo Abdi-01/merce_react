@@ -55,29 +55,28 @@ class ProductDetail extends React.Component {
         }
     }
 
-    btAddToCart = () => {
-        if (this.props.idUser) {
-            let { dataDetail, qty } = this.state
-            let temp = [...this.props.cartUser]
-            temp.push({
-                nama: dataDetail.nama,
-                harga: dataDetail.harga,
-                qty,
-                subTotal: dataDetail.harga * qty,
-                image: dataDetail.images[0]
-            })
-            axios.patch(`http://localhost:2010/users/${this.props.idUser}`, {
-                cart: temp
-            }).then((res) => {
-                console.log("Succes Add To Cart>>>>>>>>", res.data)
-                this.props.updateCartAction(res.data.cart)
-                this.setState({ redirectToCart: true })
-                alert("Success Add To Cart ✅")
-            }).catch((err) => {
-                console.log(err)
-            })
-        } else {
-            alert("Login First !!!")
+    btAddToCart = async () => {
+        try {
+            if (this.props.idUser) {
+                let { dataDetail, qty } = this.state
+                let temp = [...this.props.cartUser]
+                temp.push({
+                    nama: dataDetail.nama,
+                    harga: dataDetail.harga,
+                    qty,
+                    subTotal: dataDetail.harga * qty,
+                    image: dataDetail.images[0]
+                })
+                let res = await this.props.updateCartAction(temp, this.props.idUser)
+                if (res.success) {
+                    this.setState({ redirectToCart: true })
+                    alert("Success Add To Cart ✅")
+                }
+            } else {
+                alert("Login First !!!")
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 

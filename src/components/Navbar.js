@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logoutAction } from '../actions'
+import { Badge } from 'reactstrap';
 
 class Navbar extends React.Component {
     constructor(props) {
@@ -12,6 +13,15 @@ class Navbar extends React.Component {
     btnLogOut = () => {
         localStorage.removeItem("data");
         this.props.logoutAction()
+    }
+
+    totalCart=()=>{
+        let total = 0
+        this.props.cartUser.forEach((value) => {
+            total+=value.qty
+        });
+
+        return total
     }
 
     render() {
@@ -42,7 +52,7 @@ class Navbar extends React.Component {
                                             this.props.role == "user" ?
                                                 <div>
                                                     <Link to="/profile" className="dropdown-item" style={{ cursor: "pointer" }}>Profile</Link>
-                                                    <Link to="/cart" className="dropdown-item" style={{ cursor: "pointer" }}>Cart</Link>
+                                                    <Link to="/cart" className="dropdown-item" style={{ cursor: "pointer" }}>Cart<Badge color="secondary">{this.totalCart()}</Badge></Link>
                                                     <Link to="/history" className="dropdown-item" style={{ cursor: "pointer" }}>Transactions</Link>
                                                 </div>
                                                 :
@@ -75,7 +85,8 @@ const mapToProps = (globalState) => {
         user: globalState.authReducer,
         iduser: globalState.authReducer.id,
         email: globalState.authReducer.email,
-        role: globalState.authReducer.role
+        role: globalState.authReducer.role,
+        cartUser: globalState.authReducer.cart,
     }
 }
 

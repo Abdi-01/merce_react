@@ -47,15 +47,29 @@ class App extends React.Component {
           <Route path="/product-detail" component={ProductDetail} />
           <Route path="/signup" component={SignUpPage} />
           <Route path="/signin" component={SignInPage} />
-          <Route path="/profile" component={ProfilePage} />
-          <Route path="/cart" component={CartPage} />
-          <Route path="/history" component={HistoryPage} />
-          <Route path="/products-admin" component={ProductAdmin} />
-          <Route path="/transactions-admin" component={TransactionAdmin} />
+          {
+            // Proteksi untuk membatasi akses page
+            this.props.role == "Admin" ?
+              <>
+                <Route path="/products-admin" component={ProductAdmin} />
+                <Route path="/transactions-admin" component={TransactionAdmin} />
+              </> :
+              <>
+                <Route path="/profile" component={ProfilePage} />
+                <Route path="/cart" component={CartPage} />
+                <Route path="/history" component={HistoryPage} />
+              </>
+          }
         </Switch>
       </div>
     );
   }
 }
 
-export default connect(null, { loginAction, keepLogin })(App);
+const mapToProps = (globalState) => {
+  return {
+    role: globalState.authReducer.role
+  }
+}
+
+export default connect(mapToProps, { loginAction, keepLogin })(App);
