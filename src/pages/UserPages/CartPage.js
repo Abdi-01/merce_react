@@ -27,11 +27,11 @@ class CartPage extends React.Component {
                     <div className="d-flex justify-content-between align-items-center">
                         <InputGroup style={{ width: "45%", marginLeft: "20px" }}>
                             <InputGroupAddon addonType="prepend">
-                                <button type="button" className="btn btn-warning" onClick={this.btDec}>-</button>
+                                <button type="button" className="btn btn-warning" onClick={() => this.btDec(index)}>-</button>
                             </InputGroupAddon>
-                            <Input type="number" placeholder="qty" defaultValue={item.qty} />
+                            <Input type="number" placeholder="qty" value={item.qty} disabled/>
                             <InputGroupAddon addonType="append">
-                                <button type="button" className="btn btn-warning" onClick={this.btInc}>+</button>
+                                <button type="button" className="btn btn-warning" onClick={() => this.btInc(index)}>+</button>
                             </InputGroupAddon>
                         </InputGroup>
                         <h4>IDR. {(item.harga * item.qty).toLocaleString()}</h4>
@@ -51,14 +51,21 @@ class CartPage extends React.Component {
     btDeleteCart = idx => {
         let temp = [...this.props.cartUser]
         temp.splice(idx, 1)
-        axios.patch(`http://localhost:2010/users/${this.props.idUser}`, {
-            cart: temp
-        })
-            .then((res) => {
-                this.props.updateCartAction(res.data.cart)
-            }).catch((err) => {
-                console.log(err)
-            })
+        this.props.updateCartAction(temp,this.props.idUser)
+    }
+
+    btInc = (idx) => {
+        let { cartUser } = this.props
+        let temp = [...cartUser]
+        temp[idx].qty += 1
+        this.props.updateCartAction(temp, this.props.idUser)
+    }
+
+    btDec = (idx) => {
+        let { cartUser } = this.props
+        let temp = [...cartUser]
+        temp[idx].qty -= 1
+        this.props.updateCartAction(temp, this.props.idUser)
     }
 
     render() {
@@ -75,7 +82,7 @@ class CartPage extends React.Component {
                             <h2 style={{ fontWeight: 'bold' }}>Rp. {this.totalPayment().total.toLocaleString()}</h2>
                             <FormGroup>
                                 <Label for="ongkir">Biaya Pengiriman</Label>
-                                <Input type="text" id="ongkir" defaultValue={'Rp. ' + this.totalPayment().ongkir.toLocaleString()} innerRef={elemen => this.ongkir = elemen} />
+                                <Input type="text" id="ongkir" disabled value={this.totalPayment().ongkir} innerRef={elemen => this.ongkir = elemen} />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="note">Notes</Label>
