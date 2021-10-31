@@ -1,4 +1,5 @@
 import axios from "axios"
+import { API_URL } from "../helper"
 
 export const loginAction = (data) => {
     // console.log("ACTION ==> data dari sign in page :", data)
@@ -18,6 +19,11 @@ export const keepLogin = (data) => {
                 type: "LOGIN_SUCCESS",
                 payload: res.data[0]
             })
+
+            // conth pemanggilan fungsi action lain 
+            dispatch(getTransactionUser(res.data[0].id))
+
+            // menyimpan data ke local storage
             localStorage.setItem("data", JSON.stringify(res.data[0]))
         } catch (error) {
             console.log(error)
@@ -43,6 +49,21 @@ export const updateCartAction = (data, idUser) => {
             })
 
             return { success: true }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export const getTransactionUser = (iduser) => {
+    console.log(iduser)
+    return async (dispatch) => {
+        try {
+            let res = await axios.get(API_URL + `/userTransactions?iduser=${iduser}`)
+            dispatch({
+                type: "GET_TRANSACTIONS",
+                payload: res.data
+            })
         } catch (error) {
             console.log(error)
         }

@@ -3,7 +3,8 @@ const INITIAL_STATE = {
     id: null,
     email: "",
     role: "",
-    cart: []
+    cart: [],
+    transactions: []
 }
 
 export const authReducer = (state = INITIAL_STATE, action) => {
@@ -14,6 +15,9 @@ export const authReducer = (state = INITIAL_STATE, action) => {
             return { ...state, ...action.payload }
         case "UPDATE_CART":
             return { ...state, cart: action.payload }
+        case "GET_TRANSACTIONS":
+            console.log("GET TRANSACTIONS ==>", action.payload)
+            return { ...state, transactions: action.payload }
         case "LOGOUT":
             // reset ulang data reducer dgn INITIAL_STATE
             return { ...state, ...INITIAL_STATE }

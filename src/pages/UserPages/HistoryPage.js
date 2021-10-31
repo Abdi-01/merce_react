@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getTransactionUser } from '../../actions';
 
-class HistoryPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
+const HistoryPage = (props) => {
+
+    const dispatch = useDispatch()
+
+    const { iduser } = useSelector((state) => {
+        console.log(state.authReducer.id)
+        return {
+            iduser: state.authReducer.id
+        }
+    })
+
+    const printTransactions = () => {
+
     }
-    render() {
-        return (
-            <div>
-                <h1>History Page</h1>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <h3 className="text-center">Your History Transactions</h3>
+        </div>
+    )
 }
 
 export default HistoryPage;
