@@ -41,8 +41,14 @@ const HistoryPage = (props) => {
                                     <p>{val.status}</p>
                                 </span>
                                 <span className="col">
-                                    <button className="btn btn-link btn-block text-left p-0" type="button" data-toggle="collapse" data-target={`#collapse${idx}`} aria-expanded="true" aria-controls={`collapse${idx}`}>
+                                    <button className="btn btn-info text-left p-1 mx-1" type="button" data-toggle="collapse" data-target={`#collapse${idx}`} aria-expanded="true" aria-controls={`collapse${idx}`}>
                                         Detail
+                                    </button>
+                                    <button className="btn btn-success text-left p-1 mx-1" type="button" >
+                                        Accept
+                                    </button>
+                                    <button className="btn btn-warning text-left p-1 mx-1" type="button" >
+                                        Reject
                                     </button>
                                 </span>
                             </div>
@@ -52,12 +58,22 @@ const HistoryPage = (props) => {
                     <div id={`collapse${idx}`} className="collapse" aria-labelledby={`heading${idx}`} data-parent="#accordionExample">
                         <div className="card-body">
                             <table className="table table-borderless">
+                                <thead>
+                                    <tr className="text-center">
+                                        <th>No</th>
+                                        <th style={{ width: 250 }}>Product</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Sub Total</th>
+                                    </tr>
+                                </thead>
                                 {
                                     val.detail.map((value, index) => {
                                         return (
-                                            <tr>
-                                                <th>{index+1}</th>
-                                                <td className="text-center"><img src={value.image} width="10%"/></td>
+                                            <tr className="text-center">
+                                                <th >{index + 1}</th>
+                                                <td className="text-center"><img src={value.image} width="50%" /></td>
                                                 <td>{value.nama}</td>
                                                 <td>IDR. {value.harga.toLocaleString()}</td>
                                                 <td>{value.qty}</td>
