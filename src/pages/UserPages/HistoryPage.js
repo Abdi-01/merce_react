@@ -28,12 +28,13 @@ const HistoryPage = (props) => {
                                 </span>
                                 <span className="col">
                                     <p>
-                                        {val.status}
+                                        {val.username}
                                     </p>
                                 </span>
                                 <span className="col">
                                     <p>
-                                        {val.totalPayment}
+                                        IDR.
+                                        {val.totalPayment.toLocaleString()}
                                     </p>
                                 </span>
                                 <span className="col">
@@ -50,8 +51,21 @@ const HistoryPage = (props) => {
 
                     <div id={`collapse${idx}`} className="collapse" aria-labelledby={`heading${idx}`} data-parent="#accordionExample">
                         <div className="card-body">
-                            <table>
-                                
+                            <table className="table table-borderless">
+                                {
+                                    val.detail.map((value, index) => {
+                                        return (
+                                            <tr>
+                                                <th>{index+1}</th>
+                                                <td className="text-center"><img src={value.image} width="10%"/></td>
+                                                <td>{value.nama}</td>
+                                                <td>IDR. {value.harga.toLocaleString()}</td>
+                                                <td>{value.qty}</td>
+                                                <td>IDR. {value.subTotal.toLocaleString()}</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
                             </table>
                         </div>
                     </div>
@@ -62,8 +76,8 @@ const HistoryPage = (props) => {
 
     return (
         <div>
-            <h3 className="text-center">Your History Transactions</h3>
-            <div className="accordion" id="accordionExample">
+            <h3 className="text-center my-5">Your History Transactions</h3>
+            <div className="accordion container" id="accordionExample">
                 {printTransactions()}
             </div>
         </div>
