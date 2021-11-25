@@ -64,10 +64,19 @@ class ProductAdmin extends React.Component {
                 <td>IDR. {value.price.toLocaleString()}</td>
                 <td>
                     <Button type="button" color="warning" onClick={() => this.btEdit(index)}>Edit</Button>
-                    <Button type="button" color="danger" outline>Delete</Button>
+                    <Button type="button" color="danger" outline onClick={() => this.btDelete(value.idproduct)}>Delete</Button>
                 </td>
             </tr>
         })
+    }
+
+    btDelete = (idproduct) => {
+        axios.delete(`${API_URL}/products/delete/${idproduct}`)
+            .then((res) => {
+                this.getProducts()
+            }).catch((err) => {
+                console.log(err);
+            })
     }
 
     btEdit = (index) => {
@@ -80,6 +89,7 @@ class ProductAdmin extends React.Component {
                 onChange={(e) => this.handleImages(e, index)} />
         })
     }
+
     handleImages = (e, index) => {
         let temp = this.state.images
         temp[index] = e.target.value
@@ -125,24 +135,24 @@ class ProductAdmin extends React.Component {
     }
 
     btAddProduct = () => {
-        let nama = this.refs.nama.value
+        let name = this.refs.nama.value
         let brand = this.refs.brand.value
-        let kategori = this.refs.kategori.value
+        let category = this.refs.kategori.value
         let stock = parseInt(this.refs.stock.value)
-        let harga = parseInt(this.refs.harga.value)
-        let deskripsi = this.refs.deskripsi.value
+        let price = parseInt(this.refs.harga.value)
+        let description = this.refs.deskripsi.value
         let images = this.state.images
 
-        console.log(nama, brand, kategori, stock, harga, deskripsi, images)
+        // console.log(nama, brand, kategori, stock, harga, deskripsi, images)
 
-        if (nama == "" || brand == "" || kategori == "" || stock == "" || harga == "" || deskripsi == "" || images.length == 0) {
+        if (name == "" || brand == "" || category == "" || stock == "" || price == "" || description == "" || images.length == 0) {
             alert("Fill in form ❌")
         } else {
-            if (isNaN(stock) || isNaN(harga)) {
+            if (isNaN(stock) || isNaN(price)) {
                 alert("Price or stock, wrong input ❌")
             } else {
-                axios.post("http://localhost:2010/products", {
-                    nama, brand, kategori, stock, harga, deskripsi, images
+                axios.post(`${API_URL}/products/add`, {
+                    name, brand, category, stock, price, description, images
                 }).then((res) => {
                     this.getProducts()
                     this.setState({ modal: !this.state.modal })
