@@ -29,7 +29,7 @@ class ProductPage extends React.Component {
         return this.state.products.map((value, index) => {
             return <div key={index} className="col-md-3 my-2">
                 <Card>
-                    <Link to={`/product-detail?id=${value.idproduct}`} style={{textDecoration:"none", color:"black"}}>
+                    <Link to={`/product-detail?idproduct=${value.idproduct}`} style={{textDecoration:"none", color:"black"}}>
                         <CardImg width="100%" src={value.images[0].url} alt={`image ${value.name}`} />
                         <CardBody>
                             <Badge color="info">{value.category}</Badge>

@@ -4,6 +4,7 @@ import { Spinner, InputGroup, InputGroupAddon, InputGroupText, Input } from 'rea
 import { connect } from 'react-redux'
 import { updateCartAction } from "../actions"
 import { Redirect } from 'react-router-dom';
+import { API_URL } from '../helper';
 class ProductDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -24,7 +25,7 @@ class ProductDetail extends React.Component {
     }
 
     getProductDetail = () => {
-        axios.get(`http://localhost:2010/products${this.props.location.search}`)
+        axios.get(`${API_URL}/products/get${this.props.location.search}`)
             .then((res) => {
                 console.log(res.data)
                 this.setState({ dataDetail: res.data[0] })
@@ -88,20 +89,20 @@ class ProductDetail extends React.Component {
         return (
             <div className="row p-5">
                 {
-                    dataDetail.id &&
+                    dataDetail.idproduct &&
                     <>
                         <div className="col-md-7">
-                            <img src={dataDetail.images[0]} width="100%" />
+                            <img src={dataDetail.images[0].url} width="100%" />
                         </div>
                         <div className="col-md-4">
                             <div >
-                                <h4 style={{ fontWeight: "bolder" }}>{dataDetail.nama}</h4>
-                                <h2 style={{ fontWeight: "bolder" }}>IDR. {dataDetail.harga.toLocaleString()}</h2>
+                                <h4 style={{ fontWeight: "bolder" }}>{dataDetail.name}</h4>
+                                <h2 style={{ fontWeight: "bolder" }}>IDR. {dataDetail.price.toLocaleString()}</h2>
                             </div>
                             <hr />
                             <div>
                                 <label style={{ fontWeight: "bold" }}>Description</label>
-                                <p style={{ textAlign: "justify" }}>{dataDetail.deskripsi}</p>
+                                <p style={{ textAlign: "justify" }}>{dataDetail.description}</p>
                             </div>
                             <hr />
                             <div>
