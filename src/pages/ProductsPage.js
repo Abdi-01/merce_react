@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Card, CardImg, CardBody, CardTitle, CardText, Badge } from 'reactstrap'
 import { Link } from 'react-router-dom';
+import { API_URL } from '../helper';
 class ProductPage extends React.Component {
     constructor(props) {
         super(props);
@@ -15,7 +16,7 @@ class ProductPage extends React.Component {
     }
 
     getProducts = () => {
-        axios.get("http://localhost:2010/products")
+        axios.get(`${API_URL}/products/get`)
             .then((res) => {
                 // console.table(res.data)
                 this.setState({ products: res.data })
@@ -28,12 +29,12 @@ class ProductPage extends React.Component {
         return this.state.products.map((value, index) => {
             return <div key={index} className="col-md-3 my-2">
                 <Card>
-                    <Link to={`/product-detail?id=${value.id}`} style={{textDecoration:"none", color:"black"}}>
-                        <CardImg width="100%" src={value.images[0]} alt={`image ${value.nama}`} />
+                    <Link to={`/product-detail?id=${value.idproduct}`} style={{textDecoration:"none", color:"black"}}>
+                        <CardImg width="100%" src={value.images[0].url} alt={`image ${value.name}`} />
                         <CardBody>
-                            <Badge color="info">{value.kategori}</Badge>
-                            <CardTitle tag="h5" style={{ fontWeight: "bolder" }}>{value.nama}</CardTitle>
-                            <CardText tag="h5" className="text-right">IDR. {value.harga.toLocaleString()}</CardText>
+                            <Badge color="info">{value.category}</Badge>
+                            <CardTitle tag="h5" style={{ fontWeight: "bolder" }}>{value.name}</CardTitle>
+                            <CardText tag="h5" className="text-right">IDR. {value.price.toLocaleString()}</CardText>
                         </CardBody>
                     </Link>
                 </Card>
