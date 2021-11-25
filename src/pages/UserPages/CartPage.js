@@ -124,7 +124,7 @@ class CartPage extends React.Component {
 const mapToProps = (globalState) => {
     return {
         cartUser: globalState.authReducer.cart,
-        idUser: globalState.authReducer.id,
+        idUser: globalState.authReducer.iduser,
         email: globalState.authReducer.email
     }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { API_URL } from '../helper';
 
 class SignUpPage extends React.Component {
     constructor(props) {
@@ -8,7 +9,9 @@ class SignUpPage extends React.Component {
     }
 
     btnSignUP = () => {
+        let username = this.refs.username.value
         let email = this.refs.email.value
+        let telp = this.refs.phone.value
         let password = this.refs.password.value
         let confPassword = this.refs.confPassword.value
 
@@ -20,11 +23,11 @@ class SignUpPage extends React.Component {
             if (password == confPassword) {
                 if (email.includes("@")) {
                     // Mengirim ke API menggunakan axios.post
-                    axios.post(`http://localhost:2010/users`, {
+                    axios.post(`${API_URL}/users/register`, {
+                        username,
                         email,
-                        password,
-                        role: "user",
-                        cart: []
+                        telp,
+                        password
                     }).then((res) => {
                         console.log(res)
 
@@ -45,8 +48,16 @@ class SignUpPage extends React.Component {
             <div className="m-auto pt-4" style={{ width: "30%" }}>
                 <h1 className="text-center">Sign Up</h1>
                 <div className="form-group pt-3">
+                    <label>Username</label>
+                    <input type="text" className="form-control" placeholder="example : Antoni01" ref="username" />
+                </div>
+                <div className="form-group pt-3">
                     <label>Email address</label>
                     <input type="text" className="form-control" placeholder="example@mail.com" ref="email" />
+                </div>
+                <div className="form-group pt-3">
+                    <label>Phone</label>
+                    <input type="text" className="form-control" placeholder="08xxxxxxxxxx" ref="phone" />
                 </div>
                 <div className="form-group" >
                     <label>Password</label>

@@ -13,18 +13,21 @@ export const keepLogin = (data) => {
     return async (dispatch) => {
         try {
             // menjalankan axios
-            let res = await axios.get(`http://localhost:2010/users?email=${data.email}&password=${data.password}`)
+            let res = await axios.post(`${API_URL}/users/keep-login`,{
+                email:data.email,
+                password:data.password
+            })
             // cara menyimpan data kereducer
             dispatch({
                 type: "LOGIN_SUCCESS",
-                payload: res.data[0]
+                payload: res.data.results[0]
             })
 
             // conth pemanggilan fungsi action lain 
-            dispatch(getTransactionUser(res.data[0].id))
+            // dispatch(getTransactionUser(res.data[0].id))
 
             // menyimpan data ke local storage
-            localStorage.setItem("data", JSON.stringify(res.data[0]))
+            localStorage.setItem("data", JSON.stringify(res.data.results[0]))
         } catch (error) {
             console.log(error)
         }

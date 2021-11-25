@@ -83,7 +83,7 @@ const mapToProps = (globalState) => {
     // console.table(globalState.authReducer)
     return {
         user: globalState.authReducer,
-        iduser: globalState.authReducer.id,
+        iduser: globalState.authReducer.iduser,
         email: globalState.authReducer.email,
         role: globalState.authReducer.role,
         cartUser: globalState.authReducer.cart,

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Table, Button, NavItem, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input } from 'reactstrap'
+import { API_URL } from '../../helper';
 
 class ProductAdmin extends React.Component {
     constructor(props) {
@@ -22,9 +23,9 @@ class ProductAdmin extends React.Component {
     }
 
     getProducts = () => {
-        axios.get("http://localhost:2010/products")
+        axios.get(`${API_URL}/products/get`)
             .then((res) => {
-                // console.table(res.data)
+                console.table(res.data)
                 this.setState({ products: res.data })
             }).catch((err) => {
                 console.log(err)
@@ -41,26 +42,26 @@ class ProductAdmin extends React.Component {
                 <td className="text-center" style={{ width: "20vw" }}>
                     {
                         productIndex == index ?
-                            <img src={value.images[imgIndex]} width="40%" alt={value.nama} />
+                            <img src={value.images[imgIndex].url} width="40%" alt={value.nama} />
                             :
-                            <img src={value.images[0]} width="40%" alt={value.nama} />
+                            <img src={value.images[0].url} width="40%" alt={value.nama} />
 
                     }
                     <div className="pt-2">
                         {
                             value.images.map((val, idx) => {
-                                return <img className="px-1" style={{ cursor: "pointer" }} src={val} width="15%" alt={value.nama + idx}
+                                return <img className="px-1" style={{ cursor: "pointer" }} src={val.url} width="15%" alt={value.nama + idx}
                                     onClick={() => this.setState({ imgIndex: idx, productIndex: index })}
                                 />
                             })
                         }
                     </div>
                 </td>
-                <td>{value.nama}</td>
+                <td>{value.name}</td>
                 <td>{value.brand}</td>
-                <td>{value.kategori}</td>
+                <td>{value.category}</td>
                 <td>{value.stock}</td>
-                <td>IDR. {value.harga.toLocaleString()}</td>
+                <td>IDR. {value.price.toLocaleString()}</td>
                 <td>
                     <Button type="button" color="warning" onClick={() => this.btEdit(index)}>Edit</Button>
                     <Button type="button" color="danger" outline>Delete</Button>
@@ -87,7 +88,7 @@ class ProductAdmin extends React.Component {
 
     printImagesEdit = () => {
         return this.state.products[this.state.selectedIndex].images.map((value, index) => {
-            return <Input type="text" placeholder={`Image-${index + 1}`} defaultValue={value}
+            return <Input type="text" placeholder={`Image-${index + 1}`} defaultValue={value.url}
                 onChange={(e) => this.handleImagesEdit(e, index)}
             />
         })
@@ -233,7 +234,7 @@ class ProductAdmin extends React.Component {
                                     <div className="form-group col-6">
                                         <label>Name</label>
                                         <input type="text" className="form-control" ref="editNama"
-                                            defaultValue={products[selectedIndex].nama} />
+                                            defaultValue={products[selectedIndex].name} />
                                     </div>
                                     <div className="form-group col-6">
                                         <label>Brand</label>
@@ -245,7 +246,7 @@ class ProductAdmin extends React.Component {
                                     <div className="col-4">
                                         <div className="form-group">
                                             <label>Category</label>
-                                            <select className="form-control" ref="editKategori" defaultValue={products[selectedIndex].kategori}>
+                                            <select className="form-control" ref="editKategori" defaultValue={products[selectedIndex].category}>
                                                 <option value={null}>Pilih Category</option>
                                                 <option value="Mebel">Mebel</option>
                                                 <option value="Accesories">Accesories</option>
@@ -262,12 +263,12 @@ class ProductAdmin extends React.Component {
                                     <div className="col-4">
                                         <div className="form-group">
                                             <label>Price</label>
-                                            <input type="text" className="form-control" ref="editHarga" defaultValue={products[selectedIndex].harga} />
+                                            <input type="text" className="form-control" ref="editHarga" defaultValue={products[selectedIndex].price} />
                                         </div>
                                     </div>
                                     <div className="form-group">
                                         <label>Description</label>
-                                        <textarea className="form-control" ref="editDeskripsi" defaultValue={products[selectedIndex].deskripsi} />
+                                        <textarea className="form-control" ref="editDeskripsi" defaultValue={products[selectedIndex].description} />
                                     </div>
                                 </div>
                                 <hr />

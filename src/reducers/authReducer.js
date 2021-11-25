@@ -1,6 +1,6 @@
 // Setup default value
 const INITIAL_STATE = {
-    id: null,
+    iduser: null,
     email: "",
     role: "",
     cart: [],
@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 export const authReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case "LOGIN_SUCCESS":
-            // console.log("REDUCER ==> Data dari authAction :", action.payload)
+            console.log("REDUCER ==> Data dari authAction :", action.payload)
             // proses penyimpanan ke globalStorage, menggunakan concatination
             return { ...state, ...action.payload }
         case "UPDATE_CART":

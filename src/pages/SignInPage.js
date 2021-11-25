@@ -3,6 +3,7 @@ import axios from 'axios'
 import { loginAction } from '../actions'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { API_URL } from '../helper';
 
 class SignInPage extends React.Component {
     constructor(props) {
@@ -29,13 +30,17 @@ class SignInPage extends React.Component {
         if (email == "" || password == "") {
             alert(`FIll in form ❌`)
         } else {
-            axios.get(`http://localhost:2010/users?email=${email}&password=${password}`)
+            axios.post(`${API_URL}/users/login`,{
+                email,
+                password
+            })
                 .then((res) => {
-                    this.props.loginAction(res.data[0])
+                    console.log(res.data)
+                    this.props.loginAction(res.data.results[0])
                     this.setState({ redirect: true })
                     // console.table(res.data)
                     // penyimpanan data pda browser
-                    localStorage.setItem("data", JSON.stringify(res.data[0]))
+                    localStorage.setItem("data", JSON.stringify(res.data.results[0]))
                 }).catch((err) => {
                     console.log(err)
                 })
@@ -73,7 +78,7 @@ class SignInPage extends React.Component {
 
 const mapToProps = (globalState) => {
     return {
-        iduser: globalState.authReducer.id
+        iduser: globalState.authReducer.iduser
     }
 }
 

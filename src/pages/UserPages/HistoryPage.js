@@ -9,7 +9,7 @@ const HistoryPage = (props) => {
 
     const { iduser, transactions } = useSelector(({ authReducer }) => {
         return {
-            iduser: authReducer.id,
+            iduser: authReducer.iduser,
             transactions: authReducer.transactions,
         }
     })
