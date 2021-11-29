@@ -114,6 +114,7 @@ class ProductAdmin extends React.Component {
         let { products, selectedIndex, imagesEdit, modalEdit } = this.state
         console.log("gambar edit", imagesEdit)
 
+        let idproduct = products[selectedIndex].idproduct
         let name = this.refs.editNama.value
         let brand = this.refs.editBrand.value
         let category = this.refs.editKategori.value
@@ -124,11 +125,11 @@ class ProductAdmin extends React.Component {
 
 
         axios.patch(`${API_URL}/products/update`, {
-            name, brand, category, stock, price, description, images
+            idproduct, name, brand, category, stock, price, description, images
         })
             .then((res) => {
-                // this.getProducts()
-                // this.setState({ selectedIndex: null, imagesEdit: [], modalEdit: !modalEdit })
+                this.getProducts()
+                this.setState({ selectedIndex: null, imagesEdit: [], modalEdit: !modalEdit })
             }).catch((err) => {
                 console.log(err)
             })

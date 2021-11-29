@@ -60,16 +60,22 @@ class ProductDetail extends React.Component {
         try {
             if (this.props.idUser) {
                 let { dataDetail, qty } = this.state
-                let temp = [...this.props.cartUser]
-                temp.push({
-                    nama: dataDetail.nama,
-                    harga: dataDetail.harga,
-                    qty,
-                    subTotal: dataDetail.harga * qty,
-                    image: dataDetail.images[0]
+                // let temp = [...this.props.cartUser]
+                // temp.push({
+                //     nama: dataDetail.nama,
+                //     harga: dataDetail.harga,
+                //     qty,
+                //     subTotal: dataDetail.harga * qty,
+                //     image: dataDetail.images[0]
+                // })
+                let res = await axios.post(`${API_URL}/transactions/add-cart`, {
+                    idproduct: dataDetail.idproduct,
+                    iduser: this.props.idUser,
+                    qty
                 })
-                let res = await this.props.updateCartAction(temp, this.props.idUser)
-                if (res.success) {
+                console.log(res.data)
+                //     let res = await this.props.updateCartAction(temp, this.props.idUser)
+                if (res.data.success) {
                     this.setState({ redirectToCart: true })
                     alert("Success Add To Cart ✅")
                 }

@@ -3,22 +3,38 @@ import { Button, Input, FormGroup, Label, InputGroup, InputGroupAddon } from 're
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { updateCartAction } from '../../actions';
+import { API_URL } from '../../helper';
 
 class CartPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            dataCart: []
+        }
+    }
+
+    componentDidMount() {
+        this.getCart()
+    }
+
+    getCart = async () => {
+        try {
+            let res = await axios.get(`${API_URL}/transactions/get-cart?iduser=${this.props.idUser}`)
+            this.setState({ dataCart: res.data })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     printCart = () => {
-        return this.props.cartUser.map((item, index) => {
+        return this.state.dataCart.map((item, index) => {
             return <div className="row shadow p-1 mb-3 bg-white rounded" >
                 <div className="col-md-2">
-                    <img src={item.image} width="100%" />
+                    <img src={item.url_image} width="100%" />
                 </div>
                 <div className="col-md-3 d-flex justify-content-center flex-column">
-                    <h5 style={{ fontWeight: 'bolder' }}>{item.nama}</h5>
-                    <h4 style={{ fontWeight: 'bolder' }}>IDR. {item.harga.toLocaleString()}</h4>
+                    <h5 style={{ fontWeight: 'bolder' }}>{item.name}</h5>
+                    <h4 style={{ fontWeight: 'bolder' }}>IDR. {item.price.toLocaleString()}</h4>
                 </div>
                 {/* <div className="col-md-1 d-flex align-items-center">
                     <h5 style={{ fontWeight: 'bolder' }}>{item.kategori}</h5>
@@ -34,7 +50,7 @@ class CartPage extends React.Component {
                                 <button type="button" className="btn btn-warning" onClick={() => this.btInc(index)}>+</button>
                             </InputGroupAddon>
                         </InputGroup>
-                        <h4>IDR. {(item.harga * item.qty).toLocaleString()}</h4>
+                        <h4>IDR. {(item.price * item.qty).toLocaleString()}</h4>
                     </div>
                     <Button color="warning" onClick={() => this.btDeleteCart(index)} style={{ border: 'none', float: 'right', marginLeft: "1vw" }} >Remove</Button>
                 </div>
@@ -44,28 +60,28 @@ class CartPage extends React.Component {
 
     totalPayment = () => {
         let total = 0
-        this.props.cartUser.forEach(item => total += item.qty * item.harga)
+        this.state.dataCart.forEach(item => total += item.qty * item.price)
         return { total: total + (total * 0.025), ongkir: total * 0.025 }
     }
 
     btDeleteCart = idx => {
-        let temp = [...this.props.cartUser]
+        let temp = [...this.state.dataCart]
         temp.splice(idx, 1)
-        this.props.updateCartAction(temp, this.props.idUser)
+        this.setState({ dataCart: temp })
     }
 
     btInc = (idx) => {
-        let { cartUser } = this.props
-        let temp = [...cartUser]
+        let { dataCart } = this.state
+        let temp = [...dataCart]
         temp[idx].qty += 1
-        this.props.updateCartAction(temp, this.props.idUser)
+        this.setState({ dataCart: temp })
     }
 
     btDec = (idx) => {
-        let { cartUser } = this.props
-        let temp = [...cartUser]
+        let { dataCart } = this.state
+        let temp = [...dataCart]
         temp[idx].qty -= 1
-        this.props.updateCartAction(temp, this.props.idUser)
+        this.setState({ dataCart: temp })
     }
 
     btCheckOut = () => {
