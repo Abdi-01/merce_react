@@ -106,7 +106,7 @@ class ProductAdmin extends React.Component {
 
     handleImagesEdit = (e, index) => {
         let temp = [...this.state.products[this.state.selectedIndex].images]
-        temp[index] = e.target.value
+        temp[index].url = e.target.value
         this.setState({ imagesEdit: temp })
     }
 
@@ -114,21 +114,21 @@ class ProductAdmin extends React.Component {
         let { products, selectedIndex, imagesEdit, modalEdit } = this.state
         console.log("gambar edit", imagesEdit)
 
-        let nama = this.refs.editNama.value
+        let name = this.refs.editNama.value
         let brand = this.refs.editBrand.value
-        let kategori = this.refs.editKategori.value
+        let category = this.refs.editKategori.value
         let stock = parseInt(this.refs.editStock.value)
-        let harga = parseInt(this.refs.editHarga.value)
-        let deskripsi = this.refs.editDeskripsi.value
+        let price = parseInt(this.refs.editHarga.value)
+        let description = this.refs.editDeskripsi.value
         let images = imagesEdit.length > 0 ? imagesEdit : products[selectedIndex].images
 
 
-        axios.patch(`http://localhost:2010/products/${products[selectedIndex].id}`, {
-            nama, brand, kategori, stock, harga, deskripsi, images
+        axios.patch(`${API_URL}/products/update`, {
+            name, brand, category, stock, price, description, images
         })
             .then((res) => {
-                this.getProducts()
-                this.setState({ selectedIndex: null, imagesEdit: [], modalEdit: !modalEdit })
+                // this.getProducts()
+                // this.setState({ selectedIndex: null, imagesEdit: [], modalEdit: !modalEdit })
             }).catch((err) => {
                 console.log(err)
             })
