@@ -30,17 +30,17 @@ class SignInPage extends React.Component {
         if (email == "" || password == "") {
             alert(`FIll in form ❌`)
         } else {
-            axios.post(`${API_URL}/users/login`,{
+            axios.post(`${API_URL}/users/login`, {
                 email,
                 password
             })
                 .then((res) => {
                     console.log(res.data)
-                    this.props.loginAction(res.data.results[0])
+                    this.props.loginAction(res.data.loginData)
                     this.setState({ redirect: true })
                     // console.table(res.data)
                     // penyimpanan data pda browser
-                    localStorage.setItem("data", JSON.stringify(res.data.results[0]))
+                    localStorage.setItem("shopToken", res.data.loginData.token)
                 }).catch((err) => {
                     console.log(err)
                 })

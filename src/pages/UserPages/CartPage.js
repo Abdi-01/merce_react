@@ -19,8 +19,16 @@ class CartPage extends React.Component {
 
     getCart = async () => {
         try {
-            let res = await axios.get(`${API_URL}/transactions/get-cart?iduser=${this.props.idUser}`)
-            this.setState({ dataCart: res.data })
+            let token = localStorage.getItem("shopToken")
+            if (token) {
+                let res = await axios.get(`${API_URL}/transactions/get-cart`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                console.log(res.data)
+                this.setState({ dataCart: res.data })
+            }
         } catch (error) {
             console.log(error)
         }

@@ -28,10 +28,10 @@ class App extends React.Component {
   }
 
   reLogin = () => {
-    let data = JSON.parse(localStorage.getItem("data"))
-    console.log(data)
-    if (data) {
-      this.props.keepLogin(data)
+    let token = localStorage.getItem("shopToken")
+    console.log(token)
+    if (token) {
+      this.props.keepLogin(token)
     }
   }
 

@@ -9,25 +9,26 @@ export const loginAction = (data) => {
     }
 }
 
-export const keepLogin = (data) => {
+export const keepLogin = (token) => {
     return async (dispatch) => {
         try {
             // menjalankan axios
-            let res = await axios.post(`${API_URL}/users/keep-login`,{
-                email:data.email,
-                password:data.password
+            let res = await axios.get(`${API_URL}/users/keep-login`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
             // cara menyimpan data kereducer
             dispatch({
                 type: "LOGIN_SUCCESS",
-                payload: res.data.results[0]
+                payload: res.data.loginData
             })
 
             // conth pemanggilan fungsi action lain 
             // dispatch(getTransactionUser(res.data[0].id))
 
             // menyimpan data ke local storage
-            localStorage.setItem("data", JSON.stringify(res.data.results[0]))
+            localStorage.setItem("shopToken", res.data.loginData.token)
         } catch (error) {
             console.log(error)
         }
