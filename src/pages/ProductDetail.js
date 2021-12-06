@@ -93,45 +93,47 @@ class ProductDetail extends React.Component {
             return <Redirect to="/cart" />
         }
         return (
-            <div className="row p-5">
-                {
-                    dataDetail.idproduct &&
-                    <>
-                        <div className="col-md-7">
-                            <img src={dataDetail.images[0].url} width="100%" />
-                        </div>
-                        <div className="col-md-4">
-                            <div >
-                                <h4 style={{ fontWeight: "bolder" }}>{dataDetail.name}</h4>
-                                <h2 style={{ fontWeight: "bolder" }}>IDR. {dataDetail.price.toLocaleString()}</h2>
+            <div className="container p-2">
+                <div className="row p-5">
+                    {
+                        dataDetail.idproduct &&
+                        <>
+                            <div className="col-md-7">
+                                <img src={dataDetail.images[0].url} width="100%" />
                             </div>
-                            <hr />
-                            <div>
-                                <label style={{ fontWeight: "bold" }}>Description</label>
-                                <p style={{ textAlign: "justify" }}>{dataDetail.description}</p>
+                            <div className="col-md-4">
+                                <div >
+                                    <h4 style={{ fontWeight: "bolder" }}>{dataDetail.name}</h4>
+                                    <h2 style={{ fontWeight: "bolder" }}>IDR. {dataDetail.price.toLocaleString()}</h2>
+                                </div>
+                                <hr />
+                                <div>
+                                    <label style={{ fontWeight: "bold" }}>Description</label>
+                                    <p style={{ textAlign: "justify" }}>{dataDetail.description}</p>
+                                </div>
+                                <hr />
+                                <div>
+                                    <label style={{ fontWeight: "bold" }}>Stock</label>
+                                    <p style={{ textAlign: "justify" }}>{dataDetail.stock.toLocaleString()}</p>
+                                </div>
+                                <hr />
+                                <div className="d-flex mb-3">
+                                    <label style={{ fontWeight: "bold" }}>Amount Buy :</label>
+                                    <InputGroup style={{ width: "40%", marginLeft: "20px" }}>
+                                        <InputGroupAddon addonType="prepend">
+                                            <button type="button" className="btn btn-warning" onClick={this.btDec}>-</button>
+                                        </InputGroupAddon>
+                                        <Input type="number" placeholder="qty" value={qty} onChange={this.handleQty} />
+                                        <InputGroupAddon addonType="append">
+                                            <button type="button" className="btn btn-warning" onClick={this.btInc}>+</button>
+                                        </InputGroupAddon>
+                                    </InputGroup>
+                                </div>
+                                <button type="button" className="btn btn-success" style={{ width: "100%" }} onClick={this.btAddToCart}>Add To Cart</button>
                             </div>
-                            <hr />
-                            <div>
-                                <label style={{ fontWeight: "bold" }}>Stock</label>
-                                <p style={{ textAlign: "justify" }}>{dataDetail.stock.toLocaleString()}</p>
-                            </div>
-                            <hr />
-                            <div className="d-flex mb-3">
-                                <label style={{ fontWeight: "bold" }}>Amount Buy :</label>
-                                <InputGroup style={{ width: "30%", marginLeft: "20px" }}>
-                                    <InputGroupAddon addonType="prepend">
-                                        <button type="button" className="btn btn-warning" onClick={this.btDec}>-</button>
-                                    </InputGroupAddon>
-                                    <Input type="number" placeholder="qty" value={qty} onChange={this.handleQty} />
-                                    <InputGroupAddon addonType="append">
-                                        <button type="button" className="btn btn-warning" onClick={this.btInc}>+</button>
-                                    </InputGroupAddon>
-                                </InputGroup>
-                            </div>
-                            <button type="button" className="btn btn-success" style={{ width: "100%" }} onClick={this.btAddToCart}>Add To Cart</button>
-                        </div>
-                    </>
-                }
+                        </>
+                    }
+                </div>
             </div>
         );
     }

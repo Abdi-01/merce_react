@@ -174,7 +174,7 @@ class ProductAdmin extends React.Component {
         // console.log("List Images", this.state.images)
         let { modal, modalEdit, products, selectedIndex } = this.state;
         return (
-            <div className="p-3">
+            <div className="container p-4">
                 <h3 className="text-center">Products Management</h3>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                     <Button color="success" outline type="button" onClick={() => this.setState({ modal: !modal })}>

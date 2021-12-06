@@ -1,11 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import { API_URL } from '../helper';
+import { Redirect } from 'react-router-dom';
 
 class SignUpPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            redirect: false
+        }
     }
 
     btnSignUP = () => {
@@ -30,7 +33,10 @@ class SignUpPage extends React.Component {
                         password
                     }).then((res) => {
                         console.log(res)
-
+                        if(res.data.success){
+                            this.setState({ redirect: true })
+                            alert(res.data.message)
+                        }
                     }).catch((err) => {
                         console.log(err)
                     })
@@ -44,6 +50,9 @@ class SignUpPage extends React.Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to="/" />
+        }
         return (
             <div className="m-auto pt-4" style={{ width: "30%" }}>
                 <h1 className="text-center">Sign Up</h1>

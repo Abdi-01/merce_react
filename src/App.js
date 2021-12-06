@@ -18,6 +18,7 @@ import axios from 'axios';
 import { loginAction, keepLogin } from './actions'
 import { connect } from 'react-redux'
 import VerificationPage from './pages/VerificationPage';
+import NotFoundPage from './pages/NotFoundPage';
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -62,6 +63,7 @@ class App extends React.Component {
                 <Route path="/history" component={HistoryPage} />
               </>
           }
+          <Route path="*" component={NotFoundPage} />
         </Switch>
       </div>
     );
