@@ -17,6 +17,7 @@ import { Switch, Route } from 'react-router-dom'
 import axios from 'axios';
 import { loginAction, keepLogin } from './actions'
 import { connect } from 'react-redux'
+import VerificationPage from './pages/VerificationPage';
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -47,6 +48,7 @@ class App extends React.Component {
           <Route path="/product-detail" component={ProductDetail} />
           <Route path="/signup" component={SignUpPage} />
           <Route path="/signin" component={SignInPage} />
+          <Route path="/verification" component={VerificationPage} />
           {
             // Proteksi untuk membatasi akses page
             this.props.role == "Admin" ?

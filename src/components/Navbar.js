@@ -11,7 +11,7 @@ class Navbar extends React.Component {
     }
 
     btnLogOut = () => {
-        localStorage.removeItem("data");
+        localStorage.removeItem("shopToken");
         this.props.logoutAction()
     }
 
