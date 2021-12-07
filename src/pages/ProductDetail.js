@@ -17,10 +17,10 @@ class ProductDetail extends React.Component {
 
     componentDidMount() {
         // untuk mengambil data query yang ada pada URL
-        console.table(this.props.location)
+        // console.table(this.props.location)
 
         // untuk mengambil data params yang ada pada URL
-        console.table(this.props.match)
+        // console.table(this.props.match)
         this.getProductDetail()
     }
 

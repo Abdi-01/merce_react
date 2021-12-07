@@ -14,7 +14,10 @@ class ProductAdmin extends React.Component {
             modalEdit: false,
             images: [],
             imagesEdit: [],
-            selectedIndex: null
+            selectedIndex: null,
+            fileName: "Select Image",
+            fileUpload: null,
+            defaultImage: "https://kubalubra.is/wp-content/uploads/2017/11/default-thumbnail.jpg"
         }
     }
 
@@ -25,7 +28,7 @@ class ProductAdmin extends React.Component {
     getProducts = () => {
         axios.get(`${API_URL}/products/get`)
             .then((res) => {
-                console.table(res.data)
+                // console.table(res.data)
                 this.setState({ products: res.data })
             }).catch((err) => {
                 console.log(err)
@@ -152,14 +155,26 @@ class ProductAdmin extends React.Component {
             if (isNaN(stock) || isNaN(price)) {
                 alert("Price or stock, wrong input ❌")
             } else {
-                axios.post(`${API_URL}/products/add`, {
-                    name, brand, category, stock, price, description, images
-                }).then((res) => {
-                    this.getProducts()
-                    this.setState({ modal: !this.state.modal })
-                }).catch((err) => {
-                    console.log(err)
-                })
+                let formData = new FormData()
+                let data = {
+                    name,
+                    brand,
+                    category,
+                    stock,
+                    price,
+                    description
+                }
+
+                formData.append('data', JSON.stringify(data));
+                formData.append('images', this.state.fileUpload);
+
+                axios.post(`${API_URL}/products/add`, formData)
+                    .then((res) => {
+                        this.getProducts()
+                        this.setState({ modal: !this.state.modal })
+                    }).catch((err) => {
+                        console.log(err)
+                    })
             }
         }
     }
@@ -168,6 +183,15 @@ class ProductAdmin extends React.Component {
         let temp = this.state.images
         temp.push("")
         this.setState({ images: temp })
+    }
+
+
+    onBtImageUpload = (e) => {
+        if (e.target.files[0]) {
+            this.setState({ fileName: e.target.files[0].name, fileUpload: e.target.files[0] });
+        } else {
+            this.setState({ fileName: "Select Image", fileUpload: null })
+        }
     }
 
     render() {
@@ -227,9 +251,20 @@ class ProductAdmin extends React.Component {
                         <hr />
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <Label>Images List</Label>
-                            <Button type="button" outline color="warning" size="sm" onClick={this.btAddImage}>Add Image</Button>
+                            {/* <Button type="button" outline color="warning" size="sm" onClick={this.btAddImage}>Add Image</Button> */}
                         </div>
-                        {this.printImagesForm()}
+                        {/* {this.printImagesForm()} */}
+                        <div className="row">
+                            <div className="col-md-6 text-center">
+                                <img
+                                    id="imagePreview"
+                                    width="90%"
+                                    src={this.state.fileUpload ? URL.createObjectURL(this.state.fileUpload) : this.state.defaultImage} />
+                            </div>
+                            <div className="col-md-6">
+                                <Input type="file" onChange={this.onBtImageUpload} />
+                            </div>
+                        </div>
                     </ModalBody>
                     <ModalFooter>
                         <Button type="button" outline color="success" onClick={this.btAddProduct}>Submit</Button>
